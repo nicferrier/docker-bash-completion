@@ -60,3 +60,9 @@ aa571058142e        nicferrier/elnode:latest   /bin/sh -c '/usr/loc   4 hours ag
 $ docker kill [TAB]
 $ docker kill berserk_hoover
 }}}
+
+This was actually why I wrote it but because the output of {{{docker
+ps}}} isn't parseable it's also this that requires the {{{socat}}} and
+{{{jq}}} dependencies. Frustrating. All tools everywhere should always
+provide parseable output and no, "you can use the API" isn't really an
+excuse.
