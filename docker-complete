@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# Bash completion for docker
+# Currently does sub commands and then names for kill
+# 
+# Depends: socat, jq, sed, awk
+
+_docker_names()
+{
+    printf "GET /containers/json HTTP/1.1\r\n\r\n" \
+        | sudo socat - unix-connect:/var/run/docker.sock \
+        | tr -d '\r'  \
+        | ( DOIT=0 ;  while read line 
+        do 
+            if [ "$DOIT" == "1" ] ; then echo $line ; fi
+            if [ "$line" == "" ] ; then DOIT="1" ; fi
+        done  ; echo "]" // bizarrely socat drops the end "]"??
+    ) \
+        | jq -r 'map(.Names | .[0]) | .[]' 2> /dev/null \
+        | sed -rne 's|/(.*)|\1|p'
+}
+
+_docker() 
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+    opts="$(docker help 2>&1 | awk '/Commands:/ {DOIT=1; next} DOIT==1 {print $1}'  | tr '\n' ' ')"
+
+    case "${prev}" in 
+        kill)
+            local names="$(_docker_names)"
+            COMPREPLY=( $(compgen -W "${names}" -- ${cur}) )
+            return 0
+            ;;
+    esac
+
+    COMPREPLY=($(compgen -W "${opts}" -- ${cur}))  
+    return 0
+}
+
+
+case "$1" in
+    depends)
+        which jq && exit 1
+        which socat && exit 2
+        ;;
+
+    names)
+        _docker_names
+        ;;
+
+    *)
+        # Setup the completion by default
+        complete -F _docker docker
+        ;;
+esac
+
+# docker-complete ends here
