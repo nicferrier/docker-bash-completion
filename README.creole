@@ -1,0 +1,62 @@
+auto completion for docker with the BASH shell.
+
+=== installation ===
+
+You first need the following dependencies:
+
+* socat
+** available in ubuntu with:
+
+{{{
+apt-get install socat
+}}}
+
+* jq
+** the indispensible jq program
+** available in ubuntu with:
+
+{{{
+apt-get install jq
+}}}
+
+* GNU Sed
+** should be on all good unix systems
+
+Then just pull this file and include it in your shell.
+
+{{{
+$ curl -o ~/.docker-complete https://raw.githubusercontent.com/nicferrier/docker-bash-completion/master/docker-complete
+$ source ~/.docker-complete
+}}}
+
+Of course, you could also add it to your {{{.bashrc}}}
+
+
+=== docker commands ===
+
+This ac will complete docker sub-commands (ps, images, etc...) for
+you. It does this automatically based on the docker help.
+
+It won't do any further completion except in specific cases.
+
+Example:
+
+{{{
+$ docker s[TAB]
+save    search  start   stop    
+$ docker se[TAB]
+$ docker search 
+}}}
+
+=== docker kill ===
+
+This ac will complete docker names for you (based on the short name
+output by the {{{docker ps}}} command).
+
+{{{
+$ docker ps
+CONTAINER ID        IMAGE                      COMMAND                CREATED             STATUS              PORTS                              NAMES
+aa571058142e        nicferrier/elnode:latest   /bin/sh -c '/usr/loc   4 hours ago         Up 4 hours          6001/tcp, 0.0.0.0:8000->8000/tcp   berserk_hoover
+$ docker kill [TAB]
+$ docker kill berserk_hoover
+}}}
