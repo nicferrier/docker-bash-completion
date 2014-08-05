@@ -1,5 +1,11 @@
 auto completion for docker with the BASH shell.
 
+=== Try the official one instead ===
+https://github.com/docker/docker/blob/master/contrib/completion/bash/docker
+
+I wrote this because I couldn't find the official one but also because it was interesting.
+
+
 === installation ===
 
 You first need the following dependencies:
