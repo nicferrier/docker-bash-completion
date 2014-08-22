@@ -29,7 +29,7 @@ _docker()
     opts="$(docker help 2>&1 | awk '/Commands:/ {DOIT=1; next} DOIT==1 {print $1}'  | tr '\n' ' ')"
 
     case "${prev}" in 
-        kill|logs)
+        kill|logs|inspect)
             local names="$(_docker_names)"
             COMPREPLY=( $(compgen -W "${names}" -- ${cur}) )
             return 0
