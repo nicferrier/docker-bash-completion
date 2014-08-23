@@ -44,6 +44,19 @@ $ source ~/.docker-complete
 Of course, you could also add it to your {{{.bashrc}}}
 
 
+Alternately, clone this repo on your boxes:
+
+{{{
+$ git clone https://github.com/nicferrier/docker-bash-completion.git
+}}}
+
+and then you can:
+
+{{{
+$ source docker-bash-completion/docker-complete
+}}}
+
+
 === docker commands ===
 
 This ac will complete docker sub-commands (ps, images, etc...) for
