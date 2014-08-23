@@ -1,9 +1,15 @@
 auto completion for docker with the BASH shell.
 
-=== Try the official one instead ===
+=== Try the official one instead? ===
+
 https://github.com/docker/docker/blob/master/contrib/completion/bash/docker
 
-I wrote this because I couldn't find the official one but also because it was interesting.
+I wrote this because I couldn't find the official one but also because
+it was interesting.
+
+But it turns out I can't get the official one to work very well. The
+official ones uses the standard output of the commands and this one
+uses the API. Maybe that makes a difference?
 
 
 === installation ===
@@ -72,3 +78,9 @@ ps}}} isn't parseable it's also this that requires the {{{socat}}} and
 {{{jq}}} dependencies. Frustrating. All tools everywhere should always
 provide parseable output and no, "you can use the API" isn't really an
 excuse.
+
+=== docker inspect, docker logs ===
+
+Just do the same as {{{docker kill}}}
+
+Short names only.
