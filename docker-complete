@@ -20,6 +20,11 @@ _docker_names()
         | sed -rne 's|/(.*)|\1|p'
 }
 
+_docker_images()
+{
+    docker images | sed '1d' | sed '/^<none>/d' | awk -F" " '{print $1}' | uniq
+}
+
 _docker() 
 {
     local cur prev opts
@@ -31,6 +36,11 @@ _docker()
     case "${prev}" in 
         kill|logs|inspect)
             local names="$(_docker_names)"
+            COMPREPLY=( $(compgen -W "${names}" -- ${cur}) )
+            return 0
+            ;;
+	images|run)
+	    local names="$(_docker_images)"
             COMPREPLY=( $(compgen -W "${names}" -- ${cur}) )
             return 0
             ;;
